@@ -43,16 +43,16 @@ public class Solver {
         //     System.out.println(i);
         // }  
 
-        convertFaceletToCubies(facelets);
+        Cubie cubies = new Cubie(facelets); 
 
 		// String answer = solveRubiks(rubiksCube);
         // File output = new File(args[1]);ß
 		//great kenneth attempt of solving it
 	}
-
+    
     private static void convertFileToFacelets(String[] rubiks, char[] facelets) {
-        //based of kociemba, normal format is U R F D B L
-        //brute force it by grabbing U -> R -> F -> ... so on
+        //BRUTE FORCE TIME (just like assignment1 lolololol)
+        //up
         int index = 0; 
         for (int y = 0; y < 3; y++) { //because up is from 0 to 2 based on the rubiks cube
             for (int x = 3; x < 6; x++) {
@@ -60,23 +60,29 @@ public class Solver {
                 index++;
             }
         }   //index should end at 9 here
-
-        // R starts at x = 6 and y = 3  (but basically brute force it the same way lol)
-        for (int y = 3; y < 6; y++) {
-            for (int x = 6; x < 9; x++) {
+        
+        for (int y = 3; y < 4; y++) {
+            for (int x = 0; x < 12; x++) {
                 facelets[index] = rubiks[y].charAt(x);
                 index++;
             }
         }
-        //after this is just easier math compared to my assignment1 lol (kenneth's assignment1)
-
-        for (int y = 3; y < 6; y++) {
-            for (int x = 3; x < 6; x++) {
+        
+        for (int y = 4; y < 5; y++) {
+            for (int x = 0; x < 12; x++) {
                 facelets[index] = rubiks[y].charAt(x);
                 index++;
             }
         }
 
+        for (int y = 5; y < 6; y++) {
+            for (int x = 0; x < 12; x++) {
+                facelets[index] = rubiks[y].charAt(x);
+                index++;
+            }
+        }
+
+        //down
         for (int y = 6; y < 9; y++) {
             for (int x = 3; x < 6; x++) {
                 facelets[index] = rubiks[y].charAt(x);
@@ -84,19 +90,6 @@ public class Solver {
             }
         }        
 
-        for (int y = 3; y < 6; y++) {
-            for (int x = 9; x < 12; x++) {
-                facelets[index] = rubiks[y].charAt(x);
-                index++;
-            }
-        }
-
-        for (int y = 3; y < 6; y++) {
-            for (int x = 0; x < 3; x++) {
-                facelets[index] = rubiks[y].charAt(x);
-                index++;
-            }
-        }
     }
 
     private static void convertFaceletToCubies(char[] rubiks) {
