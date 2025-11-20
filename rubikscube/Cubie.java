@@ -18,23 +18,22 @@ public class Cubie {
         }
     }
 
-    //variables;
-    Cubes[] cubies;  //for now
+    //variables also should be private becuz oop stuff
+    private Cubes[] cubies;  //for now
 
-    //these r for later 
-    // int[] cornerPerm;
-    // int[] cornerOrien;
-    // int[] edgePerm;
-    // int[] edgeOrien;
+    private int[] cornerP;
+    private int[] cornerO;
+    private int[] edgeP;
+    private int[] edgeO;
 
     Cubie(char[] facelets) {
         //20 in total 8 corners, 12 edges
         cubies = new Cubes[20];
 
-        // cornerPerm = new int[8];
-        // cornerOrien = new int[8];
-        // edgePerm = new int[12];
-        // edgeOrien = new int[12];
+        cornerP = new int[8];
+        cornerO= new int[8];
+        edgeP = new int[12];
+        edgeO = new int[12];
 
         //first 8: corners  (BRUTE FORCE SET UP idk how to automate this lol) 
         //base of the corners order:  U R F D B L
@@ -61,10 +60,86 @@ public class Cubie {
         cubies[18] =  new Cubes(facelets[32], facelets[21]); //BL
         cubies[19] =  new Cubes(facelets[30], facelets[29]); //BR
 
-        //unsure if this is correct correct so test it out and check
+        updateCornersAndEdges();
     }
 
     public Cubes[] getCubies() {
         return this.cubies;
+    }
+
+    private void updateCornersAndEdges() {
+        //corner perm and corner orientation magic here
+        for (int i = 0; i < 8; i++) {
+            fillCornerP(i); //fills in the corner permutation
+        }
+        
+        for (int i = 8; i < 20; i++) {
+            fillEdgesP(i); //fills in the edge permutaiton
+        }
+    }
+
+    //doing the permutation magic here:
+    private void fillCornerP(int index) {
+        char[] stuff = cubies[index].colours;
+        int permOrder = getPermOrder(stuff);
+        cornerP[index] = permOrder;
+    }
+    
+    private int getPermOrder(char[] stuff) {
+        // 1  -  2  -  3  - 4   - 5   - 6   - 7   - 8 
+        //URF - UFL - ULB - UBR - DFR - DLF - DBL - DRB
+        int num = -1;
+        if ((stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W') && (stuff[0] == 'O' || stuff[1] == 'O' || stuff[2] == 'O') && (stuff[0] == 'B' || stuff[1] == 'B' || stuff[2] == 'B')) num = 1;
+        if ((stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W')) num = 2; // continue this please 
+        //continue from here
+        return num;
+    }
+
+    private void fillEdgesP(int index) {
+        char[] stuff = cubies[index].colours;
+        int edgeOrder = getEdgeOrder(stuff);
+        edgeP[index] = edgeOrder;
+    }
+
+    private int getEdgeOrder(char[] stuff) {
+        //same idea as getPermOrder:
+        //order to follow: 
+        // 1 -  2 - 3  - 4  - 5  - 6  - 7  - 8  - 9  - 10 - 11 - 12
+        //UR - UF - UL - UB - DR - DF - DL - DB - FR - FL - BL - BR
+        int num = -1;
+        if ((stuff[0] == 'O' || stuff[1] == 'W') && (stuff[0] == 'O' || stuff[1] == 'W')) num = 1;
+        //continue from here please
+        return num;
+    }
+
+    //orientiation magic part here
+    
+
+
+
+
+
+
+
+
+
+    
+    //gonna fix this
+
+
+    private String getCorrectForm() {
+        String stateInit = //took this from TestRubiksCube.java/i can also just grab it from the file
+                    "   OOO\n" + 
+                    "   OOO\n" +
+                    "   OOO\n" +
+                    "GGGWWWBBBYYY\n" +
+                    "GGGWWWBBBYYY\n" +
+                    "GGGWWWBBBYYY\n" +
+                    "   RRR\n" +
+                    "   RRR\n" +
+                    "   RRR\n";
+
+        return stateInit;
+
     }
 }
