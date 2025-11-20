@@ -70,38 +70,46 @@ public class Cubie {
     private void updateCornersAndEdges() {
         //corner perm and corner orientation magic here
         for (int i = 0; i < 8; i++) {
-            fillCornerP(i); //fills in the corner permutation
+            fillCorner(i); //fills in the corner permutation
         }
         
         for (int i = 8; i < 20; i++) {
-            fillEdgesP(i); //fills in the edge permutaiton
+            fillEdges(i); //fills in the edge permutaiton
         }
     }
 
-    //doing the permutation magic here:
-    private void fillCornerP(int index) {
+    private void fillCorner(int index) {
+        //permutation set up
         char[] stuff = cubies[index].colours;
-        int permOrder = getPermOrder(stuff);
-        cornerP[index] = permOrder;
+        int permOrder = getPermOriOrder(stuff); //
+        cornerP[index] = permOrder; 
+
+        //orientation set up
+        updateCornerOrientation(cubies[permOrder].colours, index);
     }
     
-    private int getPermOrder(char[] stuff) {
-        // 1  -  2  -  3  - 4   - 5   - 6   - 7   - 8 
+    private int getPermOriOrder(char[] stuff) {
+        //  0 - 1   - 2   -  3  - 4   - 5   - 6   - 7
         //URF - UFL - ULB - UBR - DFR - DLF - DBL - DRB
         int num = -1;
-        if ((stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W') && (stuff[0] == 'O' || stuff[1] == 'O' || stuff[2] == 'O') && (stuff[0] == 'B' || stuff[1] == 'B' || stuff[2] == 'B')) num = 1;
-        if ((stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W')) num = 2; // continue this please 
+        if ((stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W') && (stuff[0] == 'O' || stuff[1] == 'O' || stuff[2] == 'O') && (stuff[0] == 'B' || stuff[1] == 'B' || stuff[2] == 'B')) num = 0;
+        if ((stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W')) num = 1; // continue this please 
         //continue from here
         return num;
     }
 
-    private void fillEdgesP(int index) {
+    private void fillEdges(int index) {
+        //permutation set up
         char[] stuff = cubies[index].colours;
-        int edgeOrder = getEdgeOrder(stuff);
+        int edgeOrder = getPermEdgeOrder(stuff);
         edgeP[index] = edgeOrder;
+
+        //orientation set up
+        //edge array starts at 8, soo 
+        updateEdgeOrientation(cubies[edgeOrder + 8].colours, index); //NOT SURE ABOUT THE first PARAMETER I DID THE MATH IN MY HEAD
     }
 
-    private int getEdgeOrder(char[] stuff) {
+    private int getPermEdgeOrder(char[] stuff) {
         //same idea as getPermOrder:
         //order to follow: 
         // 1 -  2 - 3  - 4  - 5  - 6  - 7  - 8  - 9  - 10 - 11 - 12
@@ -112,18 +120,52 @@ public class Cubie {
         return num;
     }
 
-    //orientiation magic part here
-    
+    private void updateCornerOrientation(char[] array, int index) {
+        //right now this the actual array of URF, index is current pos in cornerO array
 
 
+                //URF - UFL - ULB - UBR - DFR - DLF - DBL - DRB  ((( FOLLOW THIS ORDER )))
 
+        // do this frok 0 to 7 
+        int num = 0;  
+        if (index == 0) { // we want to look at URF orientation 
+            while (num < 3) { //URF
+                if (array[num] != 'O') { //WE WANT TO SEE THE FIRST CHAR TO BE 'O' CUZ OBW order (URF)
+                    num++;
+                }
+            }
+            cornerO[index] = num;  //index currently represents the index at cornerO array and num represents the orientation
+        }
 
+        if (index == 1) { //UFL
+            while (num < 3) {
+                if (array[num] != 'O') { //WE WANT FIRST CHAR TO BE 'O' CUZ OWG order (UFL)
+                    num++;
+                }
 
+            }
+            cornerO[index] = num;
+        }
+    }
 
+    private void updateEdgeOrientation(char[] array, int index) {
+        //main problem is the index positioning because i put corner and edge in the same array lol
 
+                //UR - UF - UL - UB - DR - DF - DL - DB - FR - FL - BL - BR  (((FOLLOW THIS ORDER)))
 
+        //do this from 0 - 11 
+        int num = 0;
+        if (index == 0) { //UR 
+            while (num < 2) { 
+                if (array[num] != 'O' ) { //SO WE WANT FIRST CHAR TO BE 'O'
+                    num++;
+                }
+            }
+            edgeO[index] = num;
+        }
 
-    
+        //continue doing this
+    }
     //gonna fix this
 
 
