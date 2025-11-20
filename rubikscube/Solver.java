@@ -20,27 +20,91 @@ public class Solver {
 		
 		// TODO
 		File input = new File(args[0]);
-		// File output = new File(args[1]);
-		String rubiksCube = "";
+		String[] rubiksCube = new String[9];
 		try {
-			Scanner reader = new Scanner(input); 
-
+            Scanner reader = new Scanner(input); 
+            int index = 0;
 			while(reader.hasNextLine()) {
-				rubiksCube += (reader.nextLine() + "\n");
+                rubiksCube[index] = reader.nextLine();
+                index++;
 			}	
 			reader.close(); //done reading  (should i put this in 'finally' ?)
 		} catch (IOException ioe) {
-			System.out.println(ioe); 
+            System.out.println(ioe); 
 		} 
 
-		System.out.println(rubiksCube);
-		String answer = solveRubiks(rubiksCube);
+        // for (String i: rubiksCube) { //sanity check also i dont wanna do what i did in assignment1 anymore lol
+        //     System.out.println(i);
+        // }
+
+        char[] facelets = new char[54];
+        convertFileToFacelets(rubiksCube, facelets);
+        // for (char i: facelets) { //sanity check to make sure that I actually converted it properly in facelets
+        //     System.out.println(i);
+        // }  
+
+        Cubie cubies = new Cubie(facelets); 
+
+		// String answer = solveRubiks(rubiksCube);
+        // File output = new File(args[1]);ß
 		//great kenneth attempt of solving it
 	}
+    
+    private static void convertFileToFacelets(String[] rubiks, char[] facelets) {
+        //BRUTE FORCE TIME (just like assignment1 lolololol)
+        //up
+        int index = 0; 
+        for (int y = 0; y < 3; y++) { //because up is from 0 to 2 based on the rubiks cube
+            for (int x = 3; x < 6; x++) {
+                facelets[index] = rubiks[y].charAt(x);
+                index++;
+            }
+        }   //index should end at 9 here
+        
+        for (int y = 3; y < 4; y++) {
+            for (int x = 0; x < 12; x++) {
+                facelets[index] = rubiks[y].charAt(x);
+                index++;
+            }
+        }
+        
+        for (int y = 4; y < 5; y++) {
+            for (int x = 0; x < 12; x++) {
+                facelets[index] = rubiks[y].charAt(x);
+                index++;
+            }
+        }
+
+        for (int y = 5; y < 6; y++) {
+            for (int x = 0; x < 12; x++) {
+                facelets[index] = rubiks[y].charAt(x);
+                index++;
+            }
+        }
+
+        //down
+        for (int y = 6; y < 9; y++) {
+            for (int x = 3; x < 6; x++) {
+                facelets[index] = rubiks[y].charAt(x);
+                index++;
+            }
+        }        
+
+    }
+
+    private static void convertFaceletToCubies(char[] rubiks) {
+        System.out.println("doing god's work");
+
+        //im having problems understanding cubies 
+
+        // i think its orientations and permutations 
+        // I tihnk to decide whether a permutation is in the right order is to base it of which I will consider as correct
+        // for orientation just simply decided which one is facing the right order 
+    }
 
 	private static String solveRubiks(String theRubiks) {
 
-		// i think start with A* here first and then check how well it does the job 
+		// i think do A* or IDA* here first and then check how well it does the job 
 		doMoves();
 		return "hello";
 	}
@@ -115,5 +179,4 @@ public class Solver {
         //     }
             // i think using a switch makes more sense here honestly 
         }
-	}
 }
