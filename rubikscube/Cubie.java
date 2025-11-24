@@ -26,6 +26,13 @@ public class Cubie {
     private int[] edgeP;
     private int[] edgeO;
 
+    Cubie(Cubie theCubie) {
+        cornerO = theCubie.cornerO.clone();
+        cornerP = theCubie.cornerP.clone();
+        edgeO = theCubie.edgeO.clone();
+        edgeP = theCubie.edgeP.clone();
+    }
+
     Cubie(char[] facelets) {
         //20 in total 8 corners, 12 edges
         cubies = new Cubes[20];
