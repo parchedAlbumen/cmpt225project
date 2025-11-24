@@ -26,6 +26,13 @@ public class Cubie {
     private int[] edgeP;
     private int[] edgeO;
 
+    Cubie(Cubie theCubie) {
+        cornerO = theCubie.cornerO.clone();
+        cornerP = theCubie.cornerP.clone();
+        edgeO = theCubie.edgeO.clone();
+        edgeP = theCubie.edgeP.clone();
+    }
+
     Cubie(char[] facelets) {
         //20 in total 8 corners, 12 edges
         cubies = new Cubes[20];
@@ -92,9 +99,14 @@ public class Cubie {
         //  0 - 1   - 2   -  3  - 4   - 5   - 6   - 7
         //URF - UFL - ULB - UBR - DFR - DLF - DBL - DRB
         int num = -1;
-        if ((stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W') && (stuff[0] == 'O' || stuff[1] == 'O' || stuff[2] == 'O') && (stuff[0] == 'B' || stuff[1] == 'B' || stuff[2] == 'B')) num = 0;
-        if ((stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W')) num = 1; // continue this please 
-        //continue from here
+        if ((stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W') && (stuff[0] == 'O' || stuff[1] == 'O' || stuff[2] == 'O') && (stuff[0] == 'B' || stuff[1] == 'B' || stuff[2] == 'B')) num = 0; //URF
+        if ((stuff[0] == 'O' || stuff[1] == 'O' || stuff[2] == 'O') && (stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W') && (stuff[0] == 'G' || stuff[1] == 'G' || stuff[2] == 'G')) num = 1; //UFL
+        if ((stuff[0] == 'O' || stuff[1] == 'O' || stuff[2] == 'O') && (stuff[0] == 'G' || stuff[1] == 'G' || stuff[2] == 'G') && (stuff[0] == 'Y' || stuff[1] == 'Y' || stuff[2] == 'Y')) num = 2; //ULB
+        if ((stuff[0] == 'O' || stuff[1] == 'O' || stuff[2] == 'O') && (stuff[0] == 'Y' || stuff[1] == 'Y' || stuff[2] == 'Y') && (stuff[0] == 'B' || stuff[1] == 'B' || stuff[2] == 'B')) num = 3; //UBR
+        if ((stuff[0] == 'R' || stuff[1] == 'R' || stuff[2] == 'R') && (stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W') && (stuff[0] == 'B' || stuff[1] == 'B' || stuff[2] == 'B')) num = 4; //DFR
+        if ((stuff[0] == 'R' || stuff[1] == 'R' || stuff[2] == 'R') && (stuff[0] == 'G' || stuff[1] == 'G' || stuff[2] == 'G') && (stuff[0] == 'W' || stuff[1] == 'W' || stuff[2] == 'W')) num = 5; //DLF
+		if ((stuff[0] == 'R' || stuff[1] == 'R' || stuff[2] == 'R') && (stuff[0] == 'G' || stuff[1] == 'G' || stuff[2] == 'G') && (stuff[0] == 'Y' || stuff[1] == 'Y' || stuff[2] == 'Y')) num = 6; //DBL 
+		if ((stuff[0] == 'R' || stuff[1] == 'R' || stuff[2] == 'R') && (stuff[0] == 'G' || stuff[1] == 'G' || stuff[2] == 'G') && (stuff[0] == 'B' || stuff[1] == 'B' || stuff[2] == 'B')) num = 7; //DRB
         return num;
     }
 
@@ -115,18 +127,26 @@ public class Cubie {
         // 1 -  2 - 3  - 4  - 5  - 6  - 7  - 8  - 9  - 10 - 11 - 12
         //UR - UF - UL - UB - DR - DF - DL - DB - FR - FL - BL - BR
         int num = -1;
-        if ((stuff[0] == 'O' || stuff[1] == 'W') && (stuff[0] == 'O' || stuff[1] == 'W')) num = 1;
-        //continue from here please
+        if ((stuff[0] == 'O' || stuff[1] == 'W') && (stuff[0] == 'O' || stuff[1] == 'W')) num = 1; //UR
+        if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'W' || stuff[1] == 'W')) num = 2; //UF
+		if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 3; //UL
+		if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'Y' || stuff[1] == 'Y')) num = 4; //UB
+		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'B' || stuff[1] == 'B')) num = 5; //DR
+		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'W' || stuff[1] == 'W')) num = 6; //DF
+		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 7; //DL
+		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'Y' || stuff[1] == 'Y')) num = 8; //DB
+		if ((stuff[0] == 'W' || stuff[1] == 'W') && (stuff[0] == 'B' || stuff[1] == 'B')) num = 9; //FR
+		if ((stuff[0] == 'W' || stuff[1] == 'W') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 10; //FL
+		if ((stuff[0] == 'Y' || stuff[1] == 'Y') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 11; //BL
+		if ((stuff[0] == 'Y' || stuff[1] == 'Y') && (stuff[0] == 'B' || stuff[1] == 'B')) num = 12; //BR
         return num;
     }
 
     private void updateCornerOrientation(char[] array, int index) {
         //right now this the actual array of URF, index is current pos in cornerO array
 
-
                 //URF - UFL - ULB - UBR - DFR - DLF - DBL - DRB  ((( FOLLOW THIS ORDER )))
 
-        // do this frok 0 to 7 
         int num = 0;  
         if (index == 0) { // we want to look at URF orientation 
             while (num < 3) { //URF
@@ -143,6 +163,60 @@ public class Cubie {
                     num++;
                 }
 
+            }
+            cornerO[index] = num;
+        }
+
+        if (index == 2) { //ULB
+            while (num < 3) {
+                if (array[num] != 'O') {
+                    num++;
+                }
+            }
+            cornerO[index] = num;
+        }
+
+        if (index == 3) { //UBR
+            while (num < 3) {
+                if (array[num] != 'O') {
+                    num++;
+                }
+            }
+            cornerO[index] = num;
+        }
+
+        if (index == 4) {  //DFR
+            while (num < 3) {
+                if (array[num] != 'O') {
+                    num++;
+                }
+            }
+            cornerO[index] = num;
+        }
+
+        if (index == 5) {  //DLF
+            while (num < 3) {
+                if (array[num] != 'O') {
+                    num++;
+                }
+            }
+            cornerO[index] = num;
+        }
+
+        if (index == 6) { //DBL
+            while (num < 3) {
+                if (array[num] != 'O') {
+                    num++;
+                }
+            }
+            cornerO[index] = num;
+        }
+
+        if (index == 7) { //DRB
+            while (num < 3) {
+                if (array[num] != 'O') {
+                    num++;
+                }
             }
             cornerO[index] = num;
         }
@@ -164,10 +238,105 @@ public class Cubie {
             edgeO[index] = num;
         }
 
-        //continue doing this
-    }
-    //gonna fix this
+        if (index == 1) { //UF
+			while (num < 2) {
+				if (array[num] != 'O' ) { //SO WE WANT FIRST CHAR TO BE 'O'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
 
+		if (index == 2) { //UL
+			while (num < 2) {
+				if (array[num] != 'O' ) { //SO WE WANT FIRST CHAR TO BE 'O'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
+
+        if (index == 3) { //UB
+			while (num < 2) {
+				if (array[num] != 'O' ) { //SO WE WANT FIRST CHAR TO BE 'O'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
+
+		if (index == 4) { //DR
+			while (num < 2) {
+				if (array[num] != 'R' ) { //SO WE WANT FIRST CHAR TO BE 'R'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
+
+		if (index == 5) { //DF
+			while (num < 2) {
+				if (array[num] != 'R' ) { //SO WE WANT FIRST CHAR TO BE 'R'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
+
+        if (index == 6) { //DL
+			while (num < 2) {
+				if (array[num] != 'R' ) { //SO WE WANT FIRST CHAR TO BE 'R'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
+
+		if (index == 7) { //DB
+			while (num < 2) {
+				if (array[num] != 'R' ) { //SO WE WANT FIRST CHAR TO BE 'R'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
+
+		if (index == 8) { //FR
+			while (num < 2) {
+				if (array[num] != 'W' ) { //SO WE WANT FIRST CHAR TO BE 'W'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
+
+        if (index == 9) { //FL
+			while (num < 2) {
+				if (array[num] != 'W' ) { //SO WE WANT FIRST CHAR TO BE 'W'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
+
+		if (index == 10) { //BL
+			while (num < 2) {
+				if (array[num] != 'Y' ) { //SO WE WANT FIRST CHAR TO BE 'Y'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
+
+		if (index == 11) { //BR
+			while (num < 2) {
+				if (array[num] != 'Y' ) { //SO WE WANT FIRST CHAR TO BE 'Y'
+					num++;
+				}
+			}
+			edgeO[index] = num;
+		}
+    }
 
     private String getCorrectForm() {
         String stateInit = //took this from TestRubiksCube.java/i can also just grab it from the file

@@ -44,6 +44,7 @@ public class Solver {
         // }  
 
         Cubie cubies = new Cubie(facelets); 
+        //now i gotta do the movements 
 
 		// String answer = solveRubiks(rubiksCube);
         // File output = new File(args[1]);ß
