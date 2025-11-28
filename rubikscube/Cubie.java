@@ -38,7 +38,7 @@ public class Cubie {
         cubies = new Cubes[20];
 
         cornerP = new int[8];
-        cornerO= new int[8];
+        cornerO = new int[8];
         edgeP = new int[12];
         edgeO = new int[12];
 
@@ -72,6 +72,38 @@ public class Cubie {
 
     public Cubes[] getCubies() {
         return this.cubies;
+    }
+
+    public int getCornerP(int index) {
+        return cornerP[index];
+    }
+
+    public void setCornerP(int index, int value) {
+        cornerP[index] = value;
+    }
+
+    public int getCornerO(int index) {
+        return cornerO[index];
+    }
+
+    public void setCornerO(int index, int value) {
+        cornerO[index] = value;
+    }
+
+    public int getEdgeP(int index) {
+        return edgeP[index];
+    }
+
+    public void setEdgeP(int index, int value) {
+        edgeP[index] = value;
+    }
+
+    public int getEdgeO(int index) {
+        return edgeO[index];
+    }
+
+    public void setEdgeO(int index, int value) {
+        edgeO[index] = value;
     }
 
     private void updateCornersAndEdges() {
@@ -124,21 +156,21 @@ public class Cubie {
     private int getPermEdgeOrder(char[] stuff) {
         //same idea as getPermOrder:
         //order to follow: 
-        // 1 -  2 - 3  - 4  - 5  - 6  - 7  - 8  - 9  - 10 - 11 - 12
+        //0 to 11 
         //UR - UF - UL - UB - DR - DF - DL - DB - FR - FL - BL - BR
         int num = -1;
-        if ((stuff[0] == 'O' || stuff[1] == 'W') && (stuff[0] == 'O' || stuff[1] == 'W')) num = 1; //UR
-        if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'W' || stuff[1] == 'W')) num = 2; //UF
-		if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 3; //UL
-		if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'Y' || stuff[1] == 'Y')) num = 4; //UB
-		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'B' || stuff[1] == 'B')) num = 5; //DR
-		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'W' || stuff[1] == 'W')) num = 6; //DF
-		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 7; //DL
-		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'Y' || stuff[1] == 'Y')) num = 8; //DB
-		if ((stuff[0] == 'W' || stuff[1] == 'W') && (stuff[0] == 'B' || stuff[1] == 'B')) num = 9; //FR
-		if ((stuff[0] == 'W' || stuff[1] == 'W') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 10; //FL
-		if ((stuff[0] == 'Y' || stuff[1] == 'Y') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 11; //BL
-		if ((stuff[0] == 'Y' || stuff[1] == 'Y') && (stuff[0] == 'B' || stuff[1] == 'B')) num = 12; //BR
+        if ((stuff[0] == 'O' || stuff[1] == 'W') && (stuff[0] == 'O' || stuff[1] == 'W')) num = 0; //UR
+        if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'W' || stuff[1] == 'W')) num = 1; //UF
+		if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 2; //UL
+		if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'Y' || stuff[1] == 'Y')) num = 3; //UB
+		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'B' || stuff[1] == 'B')) num = 4; //DR
+		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'W' || stuff[1] == 'W')) num = 5; //DF
+		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 6; //DL
+		if ((stuff[0] == 'R' || stuff[1] == 'R') && (stuff[0] == 'Y' || stuff[1] == 'Y')) num = 7; //DB
+		if ((stuff[0] == 'W' || stuff[1] == 'W') && (stuff[0] == 'B' || stuff[1] == 'B')) num = 8; //FR
+		if ((stuff[0] == 'W' || stuff[1] == 'W') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 9; //FL
+		if ((stuff[0] == 'Y' || stuff[1] == 'Y') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 10; //BL
+		if ((stuff[0] == 'Y' || stuff[1] == 'Y') && (stuff[0] == 'B' || stuff[1] == 'B')) num = 11; //BR
         return num;
     }
 
@@ -344,7 +376,7 @@ public class Cubie {
                     "   OOO\n" +
                     "   OOO\n" +
                     "GGGWWWBBBYYY\n" +
-                    "GGGWWWBBBYYY\n" +
+                    "GGGWWWBBBYYY\n" +  
                     "GGGWWWBBBYYY\n" +
                     "   RRR\n" +
                     "   RRR\n" +
