@@ -376,7 +376,7 @@ public class Cubie {
                     "   OOO\n" +
                     "   OOO\n" +
                     "GGGWWWBBBYYY\n" +
-                    "GGGWWWBBBYYY\n" +
+                    "GGGWWWBBBYYY\n" +  
                     "GGGWWWBBBYYY\n" +
                     "   RRR\n" +
                     "   RRR\n" +
