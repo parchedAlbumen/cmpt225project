@@ -45,7 +45,14 @@ public class AStarAlgo {
         // do magic here
     }
 
-    public static ArrayList<Node> createMoveSets() {
+    public static String createMoveSets(Node node) {
         //back track to give the actual answer finaly
+        String solution = "";
+
+        while (node.parent != null) {
+            solution = node.move + solution;
+            node = node.parent; //the current node moves on to the parent node and so ojn
+        }
+        return solution;
     }
 }
