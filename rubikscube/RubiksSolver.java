@@ -1,6 +1,8 @@
 package rubikscube;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.*;
 
 public class RubiksSolver {
     //do the A* magic here with the heuristics here facts 
@@ -63,8 +65,14 @@ public class RubiksSolver {
         return (int) Math.ceil(estimation/8);
     }
 
-    public static void aStarSolver() {
+    public static void aStarSolver(Cubie leCube, Cubie leGoal, char[] moves) {
         // do magic here
+        PriorityQueue<Node> queue = new PriorityQueue<Node>();
+        HashSet<Cubie> isVisited = new HashSet<Cubie>(); //we want to see that its visited 
+        
+        Node startNode = new Node(leCube, 0, 0, null, 'Q'); //use 'Q' as a starting character,, just remove later (?) placeholder basically
+        isVisited.add(leCube);
+        
     }
 
     public static String createMoveSets(Node node) {
