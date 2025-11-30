@@ -19,6 +19,10 @@ public class AStarAlgo {
             this.parent = theParent;
             this.move = theMove;
         }
+
+        public int getF() { // get f lol
+            return g + h;
+        }
     }
 
     public static ArrayList<Node> createNewNodes(Node curr, char[] moves, Cubie goal, int max) {
@@ -37,8 +41,26 @@ public class AStarAlgo {
     }
 
     public static int heuristic(Cubie currCubie, Cubie goalCubie) {
-        //build this later or tomorrow
-        return 1; 
+        int estimation = 0;
+
+        for (int i = 0; i < 8; i++)  {
+            if (currCubie.getCornerO(i) != goalCubie.getCornerO(i)) { //they don't equal so BAD! 
+                estimation++;
+            }
+            if (currCubie.getCornerP(i) != goalCubie.getCornerP(i)) {
+                estimation++;
+            }
+        }
+
+        for (int j = 0; j < 12; j++) {
+            if (currCubie.getEdgeO(j) != goalCubie.getEdgeO(j)) { //they don't equal so ALSO BAD!
+                estimation++;
+            } 
+            if (currCubie.getEdgeP(j) != goalCubie.getEdgeP(j)) {
+                estimation++;
+            }
+        }
+        return (int) Math.ceil(estimation/8);
     }
 
     public static void aStarSolver() {
