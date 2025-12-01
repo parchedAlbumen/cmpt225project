@@ -18,7 +18,7 @@ public class Solver {
 			return;
 		}
 		
-		// TODO
+        //reads scrambled file
 		File input = new File(args[0]);
 		String[] rubiksCube = new String[9];
 		try {
@@ -33,19 +33,40 @@ public class Solver {
             System.out.println(ioe); 
 		} 
 
-        // for (String i: rubiksCube) { //sanity check also i dont wanna do what i did in assignment1 anymore lol
-        //     System.out.println(i);
-        // }
+        //reads solved file 
+        String[] solvedString = new String[9];
+        try {
+            File solvedFile = new File("cube_init.txt");
+            Scanner reader = new Scanner(solvedFile);
 
+            int index = 0;
+            while (reader.hasNextLine()) {
+                solvedString[index] = reader.nextLine();
+                index++;
+            }
+            reader.close();
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+        
+        //convert the file into facelets
         char[] facelets = new char[54];
         convertFileToFacelets(rubiksCube, facelets);
+
+        //convert the solved file to facelets
+        char[] solvedCubeFacelets = new char[54];
+        convertFileToFacelets(solvedString, solvedCubeFacelets);
+
         // for (char i: facelets) { //sanity check to make sure that I actually converted it properly in facelets
         //     System.out.println(i);
         // }  
 
-        Cubie cubies = new Cubie(facelets); 
-        //now i gotta do the movements 
+        char[] moves = {'F', 'R', 'L', 'U', 'D', 'B'};
+        Cubie scrambledCube = new Cubie(facelets); 
+        Cubie solvedCube = new Cubie(solvedCubeFacelets);
+        String answer = RubiksSolver.aStarSolver(scrambledCube, solvedCube, moves);
 
+        System.out.println("possible answer: " + answer);
 		// String answer = solveRubiks(rubiksCube);
         // File output = new File(args[1]);ß
 		//great kenneth attempt of solving it
@@ -90,25 +111,7 @@ public class Solver {
                 index++;
             }
         }        
-
     }
-
-    private static void convertFaceletToCubies(char[] rubiks) {
-        System.out.println("doing god's work");
-
-        //im having problems understanding cubies 
-
-        // i think its orientations and permutations 
-        // I tihnk to decide whether a permutation is in the right order is to base it of which I will consider as correct
-        // for orientation just simply decided which one is facing the right order 
-    }
-
-	private static String solveRubiks(String theRubiks) {
-
-		// i think do A* or IDA* here first and then check how well it does the job 
-		doMoves();
-		return "hello";
-	}
 
 	private static void doMoves() {
 		//add my moves here lol
