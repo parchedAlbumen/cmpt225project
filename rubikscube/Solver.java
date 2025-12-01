@@ -18,7 +18,7 @@ public class Solver {
 			return;
 		}
 		
-		// TODO
+        //reads scrambled file
 		File input = new File(args[0]);
 		String[] rubiksCube = new String[9];
 		try {
@@ -33,19 +33,40 @@ public class Solver {
             System.out.println(ioe); 
 		} 
 
-        // for (String i: rubiksCube) { //sanity check also i dont wanna do what i did in assignment1 anymore lol
-        //     System.out.println(i);
-        // }
+        //reads solved file 
+        String[] solvedString = new String[9];
+        try {
+            File solvedFile = new File("cube_init.txt");
+            Scanner reader = new Scanner(solvedFile);
 
+            int index = 0;
+            while (reader.hasNextLine()) {
+                solvedString[index] = reader.nextLine();
+                index++;
+            }
+            reader.close();
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+        
+        //convert the file into facelets
         char[] facelets = new char[54];
         convertFileToFacelets(rubiksCube, facelets);
+
+        //convert the solved file to facelets
+        char[] solvedCubeFacelets = new char[54];
+        convertFileToFacelets(solvedString, solvedCubeFacelets);
+
         // for (char i: facelets) { //sanity check to make sure that I actually converted it properly in facelets
         //     System.out.println(i);
         // }  
 
-        Cubie cubies = new Cubie(facelets); 
-        //now i gotta do the movements 
+        char[] moves = {'F', 'R', 'L', 'U', 'D', 'B'};
+        Cubie scrambledCube = new Cubie(facelets); 
+        Cubie solvedCube = new Cubie(solvedCubeFacelets);
+        String answer = RubiksSolver.aStarSolver(scrambledCube, solvedCube, moves);
 
+        System.out.println("possible answer: " + answer);
 		// String answer = solveRubiks(rubiksCube);
         // File output = new File(args[1]);ß
 		//great kenneth attempt of solving it

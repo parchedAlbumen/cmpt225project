@@ -27,7 +27,7 @@ public class RubiksSolver {
         }
 
         @Override 
-        public int compareTo(Node otherNode) {  //we want to 
+        public int compareTo(Node otherNode) {  //we want to use this to determine the prioritized node
             return Integer.compare(this.getF(), otherNode.getF());
         }
     }
