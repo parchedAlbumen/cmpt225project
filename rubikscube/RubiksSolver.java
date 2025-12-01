@@ -71,8 +71,15 @@ public class RubiksSolver {
         HashSet<Cubie> isVisited = new HashSet<Cubie>(); //we want to see that its visited 
         
         Node startNode = new Node(leCube, 0, 0, null, 'Q'); //use 'Q' as a starting character,, just remove later (?) placeholder basically
+        queue.add(startNode);
         isVisited.add(leCube);
         
+        while(!queue.isEmpty()) {
+            Node currNode = queue.poll();
+
+
+            if (currNode.cube.isSolved(leCube))
+        }   
     }
 
     public static String createMoveSets(Node node) {

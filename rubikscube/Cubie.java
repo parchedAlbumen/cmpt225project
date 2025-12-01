@@ -120,14 +120,14 @@ public class Cubie {
     private void fillCorner(int index) {
         //permutation set up
         char[] stuff = cubies[index].colours;
-        int permOrder = getPermOriOrder(stuff); //
+        int permOrder = getPermCornerOrder(stuff); //
         cornerP[index] = permOrder; 
 
         //orientation set up
         updateCornerOrientation(cubies[permOrder].colours, index);
     }
     
-    private int getPermOriOrder(char[] stuff) {
+    private int getPermCornerOrder(char[] stuff) {
         //  0 - 1   - 2   -  3  - 4   - 5   - 6   - 7
         //URF - UFL - ULB - UBR - DFR - DLF - DBL - DRB
         int num = -1;
@@ -146,11 +146,11 @@ public class Cubie {
         //permutation set up
         char[] stuff = cubies[index].colours;
         int edgeOrder = getPermEdgeOrder(stuff);
-        edgeP[index] = edgeOrder;
+        edgeP[index - 8] = edgeOrder;
 
         //orientation set up
         //edge array starts at 8, soo 
-        updateEdgeOrientation(cubies[edgeOrder + 8].colours, index); //NOT SURE ABOUT THE first PARAMETER I DID THE MATH IN MY HEAD
+        updateEdgeOrientation(cubies[edgeOrder + 8].colours, index - 8); //NOT SURE ABOUT THE first PARAMETER I DID THE MATH IN MY HEAD
     }
 
     private int getPermEdgeOrder(char[] stuff) {
@@ -368,6 +368,30 @@ public class Cubie {
 			}
 			edgeO[index] = num;
 		}
+    }
+
+    public boolean isSolved() {
+        //check corner perm
+        for (int i = 0; i < 8; i++) {
+            if (this.cornerP[i] != i) {
+                return false;
+            } 
+
+            if (this.cornerO[i] != 0) {
+                return false;
+            }
+        }
+
+        for (int i = 0; i < 12; i++) {
+            if (this.edgeP[i] != i) {
+                return false;
+            }
+
+            if (this.edgeO[i] != 0) {
+                return false;
+            }
+        }
+        return true; //meets everything!
     }
 
     private String getCorrectForm() {
