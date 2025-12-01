@@ -90,25 +90,7 @@ public class Solver {
                 index++;
             }
         }        
-
     }
-
-    private static void convertFaceletToCubies(char[] rubiks) {
-        System.out.println("doing god's work");
-
-        //im having problems understanding cubies 
-
-        // i think its orientations and permutations 
-        // I tihnk to decide whether a permutation is in the right order is to base it of which I will consider as correct
-        // for orientation just simply decided which one is facing the right order 
-    }
-
-	private static String solveRubiks(String theRubiks) {
-
-		// i think do A* or IDA* here first and then check how well it does the job 
-		doMoves();
-		return "hello";
-	}
 
 	private static void doMoves() {
 		//add my moves here lol
