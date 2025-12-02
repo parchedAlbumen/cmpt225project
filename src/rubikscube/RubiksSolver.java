@@ -30,28 +30,28 @@ public class RubiksSolver {
         }
     }
 
-    // public static int heuristic(Cubie currCubie, Cubie goalCubie) {
-    //     int estimation = 0;
+    public static int heuristic(Cubie currCubie, Cubie goalCubie) {
+        int estimation = 0;
 
-    //     for (int i = 0; i < 8; i++)  {
-    //         if (currCubie.getCornerP(i) != goalCubie.getCornerP(i)) { //they don't equal so BAD! 
-    //             estimation++;
-    //         }
-    //         if (currCubie.getCornerO(i) != 0) {
-    //             estimation++;
-    //         }
-    //     }
+        for (int i = 0; i < 8; i++)  {
+            if (currCubie.getCornerP(i) != goalCubie.getCornerP(i)) { //they don't equal so BAD! 
+                estimation++;
+            }
+            if (currCubie.getCornerO(i) != 0) {
+                estimation++;
+            }
+        }
 
-    //     for (int i = 0 ; i < 12; i++) {
-    //         if (currCubie.getEdgeP(i) != i) {
-    //             estimation++;
-    //         }
-    //         if (currCubie.getEdgeO(i) != 0) {
-    //             estimation++;
-    //         }
-    //     }
-    //     return (int) estimation/4;
-    // }
+        for (int i = 0 ; i < 12; i++) {
+            if (currCubie.getEdgeP(i) != i) {
+                estimation++;
+            }
+            if (currCubie.getEdgeO(i) != 0) {
+                estimation++;
+            }
+        }
+        return (int) estimation/4;
+    }
 
     public static String aStarSolver(Cubie leCube, Cubie leGoal, char[] moves) {
         // do magic here
