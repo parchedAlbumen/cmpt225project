@@ -1,7 +1,5 @@
 package src.rubikscube;
 
-import java.util.ArrayList;
-import java.util.PriorityQueue;
 import java.util.*;
 
 public class RubiksSolver {
@@ -32,28 +30,59 @@ public class RubiksSolver {
         }
     }
 
+    // public static int heuristic(Cubie currCubie, Cubie goalCubie) {
+    //     int estimation = 0;
+
+    //     for (int i = 0; i < 8; i++)  {
+    //         if (currCubie.getCornerP(i) != goalCubie.getCornerP(i)) { //they don't equal so BAD! 
+    //             estimation++;
+    //         }
+    //         if (currCubie.getCornerO(i) != 0) {
+    //             estimation++;
+    //         }
+    //     }
+
+    //     for (int i = 0 ; i < 12; i++) {
+    //         if (currCubie.getEdgeP(i) != i) {
+    //             estimation++;
+    //         }
+    //         if (currCubie.getEdgeO(i) != 0) {
+    //             estimation++;
+    //         }
+    //     }
+    //     return (int) estimation/4;
+    // }
     public static int heuristic(Cubie currCubie, Cubie goalCubie) {
-        int estimation = 0;
+    int misplacedCorners = 0;
+    int cornerOriSum = 0;
 
-        for (int i = 0; i < 8; i++)  {
-            if (currCubie.getCornerP(i) != goalCubie.getCornerP(i)) { //they don't equal so BAD! 
-                estimation++;
-            }
-            if (currCubie.getCornerO(i) != 0) {
-                estimation++;
-            }
+    for (int i = 0; i < 8; i++) {
+        if (currCubie.getCornerP(i) != goalCubie.getCornerP(i)) {
+            misplacedCorners++;
         }
-
-        for (int i = 0 ; i < 12; i++) {
-            if (currCubie.getEdgeP(i) != i) {
-                estimation++;
-            }
-            if (currCubie.getEdgeO(i) != 0) {
-                estimation++;
-            }
-        }
-        return (int) estimation/4;
+        cornerOriSum += currCubie.getCornerO(i); // 0,1,2
     }
+
+    int misplacedEdges = 0;
+    int edgeOriSum = 0;
+    for (int i = 0; i < 12; i++) {
+        if (currCubie.getEdgeP(i) != goalCubie.getEdgeP(i)) {
+            misplacedEdges++;
+        }
+        edgeOriSum += currCubie.getEdgeO(i); // 0 or 1
+    }
+
+    // ceil(x/4) = (x + 3) / 4 for ints
+    int hPosCorners = (misplacedCorners + 3) / 4;
+    int hPosEdges   = (misplacedEdges   + 3) / 4;
+    int hOriCorners = (cornerOriSum     + 3) / 4;
+    int hOriEdges   = (edgeOriSum       + 3) / 4;
+
+    return Math.max(
+        Math.max(hPosCorners, hPosEdges),
+        Math.max(hOriCorners, hOriEdges)
+    );
+}
 
     public static String aStarSolver(Cubie leCube, Cubie leGoal, char[] moves) {
         // do magic here
@@ -74,11 +103,6 @@ public class RubiksSolver {
         while(!queue.isEmpty()) {
             Node currNode = queue.poll();
             explored++;
-        
-
-            if (explored % 1000 == 0) {
-                System.out.println(queue.size());
-            }
 
             if (System.currentTimeMillis() - start > limit) {
                 System.out.println("explored: " + explored);
@@ -86,13 +110,15 @@ public class RubiksSolver {
                 return "TIMEOUT";
             }
 
+            if (currNode.g >= 25) { //depth limit,, 
+                continue;
+            }
+
             if (currNode.cube.isSolved()) {
                 return createMoveSets(currNode); //WE FOUND SOMETHING so backtrack here
             }
 
-            for (char move: moves) {
-                //check for redundancy here
-                
+            for (char move: moves) {                
                 Cubie copy = Movements.movesGo(currNode.cube, move);                 
                 if (theVisiteds.contains(copy)) {
                     skipped++;

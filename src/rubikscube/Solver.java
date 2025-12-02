@@ -65,10 +65,9 @@ public class Solver {
         char[] moves = {'F', 'R', 'L', 'U', 'D', 'B'};
         Cubie scrambledCube = new Cubie(facelets); 
         Cubie solvedCube = new Cubie(solvedCubeFacelets);
-        String answer = RubiksSolver.aStarSolver(scrambledCube, solvedCube, moves);
 
+		String answer = RubiksSolver.aStarSolver(scrambledCube, solvedCube, moves);
         System.out.println("possible answer: " + answer); //just print solution for now
-		// String answer = solveRubiks(rubiksCube);
         // File output = new File(args[1]);ß
 	}
     

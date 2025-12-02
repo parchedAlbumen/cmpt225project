@@ -131,7 +131,7 @@ public class Cubie {
         }
 
         //orientation set up
-        updateCornerOrientation(cubies[permOrder].colours, index);
+        updateCornerOrientation(cubies[index].colours, index);
     }
     
     private int getPermCornerOrder(char[] stuff) {
@@ -162,7 +162,7 @@ public class Cubie {
 
         //orientation set up
         //edge array starts at 8, soo 
-        updateEdgeOrientation(cubies[edgeOrder + 8].colours, index - 8); //NOT SURE ABOUT THE first PARAMETER I DID THE MATH IN MY HEAD
+        updateEdgeOrientation(cubies[index].colours, index - 8); //NOT SURE ABOUT THE first PARAMETER I DID THE MATH IN MY HEAD
     }
 
     private int getPermEdgeOrder(char[] stuff) {
@@ -171,7 +171,7 @@ public class Cubie {
         //0 to 11 
         //UR - UF - UL - UB - DR - DF - DL - DB - FR - FL - BL - BR
         int num = -1;
-        if ((stuff[0] == 'O' || stuff[1] == 'B') && (stuff[0] == 'O' || stuff[1] == 'B')) num = 0; //UR
+        if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'B' || stuff[1] == 'B')) num = 0; //UR
         if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'W' || stuff[1] == 'W')) num = 1; //UF
 		if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'G' || stuff[1] == 'G')) num = 2; //UL
 		if ((stuff[0] == 'O' || stuff[1] == 'O') && (stuff[0] == 'Y' || stuff[1] == 'Y')) num = 3; //UB
