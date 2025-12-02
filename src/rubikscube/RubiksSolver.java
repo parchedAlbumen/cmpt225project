@@ -52,37 +52,6 @@ public class RubiksSolver {
     //     }
     //     return (int) estimation/4;
     // }
-    public static int heuristic(Cubie currCubie, Cubie goalCubie) {
-    int misplacedCorners = 0;
-    int cornerOriSum = 0;
-
-    for (int i = 0; i < 8; i++) {
-        if (currCubie.getCornerP(i) != goalCubie.getCornerP(i)) {
-            misplacedCorners++;
-        }
-        cornerOriSum += currCubie.getCornerO(i); // 0,1,2
-    }
-
-    int misplacedEdges = 0;
-    int edgeOriSum = 0;
-    for (int i = 0; i < 12; i++) {
-        if (currCubie.getEdgeP(i) != goalCubie.getEdgeP(i)) {
-            misplacedEdges++;
-        }
-        edgeOriSum += currCubie.getEdgeO(i); // 0 or 1
-    }
-
-    // ceil(x/4) = (x + 3) / 4 for ints
-    int hPosCorners = (misplacedCorners + 3) / 4;
-    int hPosEdges   = (misplacedEdges   + 3) / 4;
-    int hOriCorners = (cornerOriSum     + 3) / 4;
-    int hOriEdges   = (edgeOriSum       + 3) / 4;
-
-    return Math.max(
-        Math.max(hPosCorners, hPosEdges),
-        Math.max(hOriCorners, hOriEdges)
-    );
-}
 
     public static String aStarSolver(Cubie leCube, Cubie leGoal, char[] moves) {
         // do magic here
