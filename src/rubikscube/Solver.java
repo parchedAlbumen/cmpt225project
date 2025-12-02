@@ -70,7 +70,6 @@ public class Solver {
         System.out.println("possible answer: " + answer); //just print solution for now
 		// String answer = solveRubiks(rubiksCube);
         // File output = new File(args[1]);ß
-		//great kenneth attempt of solving it
 	}
     
     private static void convertFileToFacelets(String[] rubiks, char[] facelets) {

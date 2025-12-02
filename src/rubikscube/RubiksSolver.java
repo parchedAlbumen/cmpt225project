@@ -32,22 +32,6 @@ public class RubiksSolver {
         }
     }
 
-    //i honestly don't think this is needed because the A* algorithm is doing this
-    // public static ArrayList<Node> createNewNodes(Node curr, char[] moves, Cubie goal, int max) {
-    //     ArrayList<Node> newNodes = new ArrayList<Node>();
-    //     if (curr.g >= max) { //if reaches the max limit depth go back (TO AVOID CREATING A LOT)
-    //         return newNodes;
-    //     }
-
-    //     for (char m : moves) {
-    //         Cubie newCubie = Movements.movesGo(curr.cube, m);
-    //         int newG = curr.g + 1;
-    //         int newH = heuristic(newCubie, goal);  //havent started on the heuristic 
-    //         newNodes.add(new Node(newCubie, newG, newH, curr, m));
-    //     }
-    //     return newNodes;
-    // }
-
     public static int heuristic(Cubie currCubie, Cubie goalCubie) {
         int estimation = 0;
 
@@ -58,7 +42,6 @@ public class RubiksSolver {
             if (currCubie.getCornerO(i) != 0) {
                 estimation++;
             }
-            estimation += currCubie.getCornerO(i);  //watch
         }
 
         for (int i = 0 ; i < 12; i++) {
@@ -68,7 +51,6 @@ public class RubiksSolver {
             if (currCubie.getEdgeO(i) != 0) {
                 estimation++;
             }
-            estimation += currCubie.getEdgeO(i);  //watch
         }
         return (int) estimation/4;
     }
@@ -84,11 +66,23 @@ public class RubiksSolver {
         Node startNode = new Node(leCube, 0, 0, null, 'Q'); //use 'Q' as a starting character,, just remove later (?) placeholder basically
         queue.add(startNode);
         theVisiteds.add(leCube); //checking cubes ?
+
+        //for debugging 
+        int explored = 0;
+        int skipped = 0;
         
         while(!queue.isEmpty()) {
             Node currNode = queue.poll();
+            explored++;
+        
+
+            if (explored % 1000 == 0) {
+                System.out.println(queue.size());
+            }
 
             if (System.currentTimeMillis() - start > limit) {
+                System.out.println("explored: " + explored);
+                System.out.println("skipped: " + skipped);
                 return "TIMEOUT";
             }
 
@@ -101,6 +95,7 @@ public class RubiksSolver {
                 
                 Cubie copy = Movements.movesGo(currNode.cube, move);                 
                 if (theVisiteds.contains(copy)) {
+                    skipped++;
                     continue; 
                 } else {
                     theVisiteds.add(copy);
