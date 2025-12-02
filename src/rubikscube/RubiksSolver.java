@@ -52,29 +52,34 @@ public class RubiksSolver {
         int estimation = 0;
 
         for (int i = 0; i < 8; i++)  {
-            if (currCubie.getCornerO(i) != goalCubie.getCornerO(i)) { //they don't equal so BAD! 
+            if (currCubie.getCornerP(i) != goalCubie.getCornerP(i)) { //they don't equal so BAD! 
                 estimation++;
             }
-            if (currCubie.getCornerP(i) != goalCubie.getCornerP(i)) {
+            if (currCubie.getCornerO(i) != 0) {
                 estimation++;
             }
+            estimation += currCubie.getCornerO(i);  //watch
         }
 
-        for (int j = 0; j < 12; j++) {
-            if (currCubie.getEdgeO(j) != goalCubie.getEdgeO(j)) { //they don't equal so ALSO BAD!
-                estimation++;
-            } 
-            if (currCubie.getEdgeP(j) != goalCubie.getEdgeP(j)) {
+        for (int i = 0 ; i < 12; i++) {
+            if (currCubie.getEdgeP(i) != i) {
                 estimation++;
             }
+            if (currCubie.getEdgeO(i) != 0) {
+                estimation++;
+            }
+            estimation += currCubie.getEdgeO(i);  //watch
         }
-        return (int) Math.ceil(estimation/8);
+        return (int) estimation/4;
     }
 
     public static String aStarSolver(Cubie leCube, Cubie leGoal, char[] moves) {
         // do magic here
         PriorityQueue<Node> queue = new PriorityQueue<Node>();
         HashSet<Cubie> theVisiteds= new HashSet<Cubie>(); //we want to see that its visited 
+
+        long start = System.currentTimeMillis();
+        long limit = 10000;
         
         Node startNode = new Node(leCube, 0, 0, null, 'Q'); //use 'Q' as a starting character,, just remove later (?) placeholder basically
         queue.add(startNode);
@@ -83,17 +88,18 @@ public class RubiksSolver {
         while(!queue.isEmpty()) {
             Node currNode = queue.poll();
 
-            if (currNode.cube.isSolved()) {
-                return createMoveSets(currNode); //WE FOUND SOMETHING
+            if (System.currentTimeMillis() - start > limit) {
+                return "TIMEOUT";
             }
 
-            if (currNode.g >= 5) {
-                continue; //skip the whole loop becuz no point
+            if (currNode.cube.isSolved()) {
+                return createMoveSets(currNode); //WE FOUND SOMETHING so backtrack here
             }
 
             for (char move: moves) {
-                Cubie copy = Movements.movesGo(currNode.cube, move);
+                //check for redundancy here
                 
+                Cubie copy = Movements.movesGo(currNode.cube, move);                 
                 if (theVisiteds.contains(copy)) {
                     continue; 
                 } else {

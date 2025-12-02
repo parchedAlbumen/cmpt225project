@@ -165,17 +165,17 @@ public class Movements {
 
             //edge permutation
             int tempEdgeP = cubie.getEdgeP(3);
-            cubie.setEdgeP(3, cubie.getEdgeP(11));
-            cubie.setEdgeP(11, cubie.getEdgeP(7));
-            cubie.setEdgeP(7, cubie.getEdgeP(10));
-            cubie.setEdgeP(10, tempEdgeP);  
+            cubie.setEdgeP(3, cubie.getEdgeP(10));
+            cubie.setEdgeP(10, cubie.getEdgeP(7));
+            cubie.setEdgeP(7, cubie.getEdgeP(11));
+            cubie.setEdgeP(11, tempEdgeP);  
 
             //edge orientation
             int tempEdgeO = cubie.getEdgeO(3);
-            cubie.setEdgeO(3, cubie.getEdgeO(11) ^ 1);
-            cubie.setEdgeO(11, cubie.getEdgeO(7) ^ 1);
-            cubie.setEdgeO(7, cubie.getEdgeO(10) ^ 1);
-            cubie.setEdgeO(10, tempEdgeO ^ 1);
+            cubie.setEdgeO(3, cubie.getEdgeO(10) ^ 1);
+            cubie.setEdgeO(10, cubie.getEdgeO(7) ^ 1);
+            cubie.setEdgeO(7, cubie.getEdgeO(11) ^ 1);
+            cubie.setEdgeO(11, tempEdgeO ^ 1);
         } else {
             System.out.println("invalid character");
         }

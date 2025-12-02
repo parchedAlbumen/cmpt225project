@@ -1,5 +1,7 @@
 package src.rubikscube;
 
+import java.util.*;
+
 public class Cubie {
     private class Cubes {
         char[] colours; 
@@ -342,4 +344,23 @@ public class Cubie {
         return stateInit;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cubie other)) return false;
+
+        return Arrays.equals(cornerP, other.cornerP) &&
+            Arrays.equals(cornerO, other.cornerO) &&
+            Arrays.equals(edgeP,   other.edgeP) &&
+            Arrays.equals(edgeO,   other.edgeO);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(cornerP);
+        result = 31 * result + Arrays.hashCode(cornerO);
+        result = 31 * result + Arrays.hashCode(edgeP);
+        result = 31 * result + Arrays.hashCode(edgeO);
+        return result;
+    }
 }
