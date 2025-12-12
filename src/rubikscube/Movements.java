@@ -27,10 +27,10 @@ public class Movements {
 
             //edge orientation part 
             int tempEdgeO = cubie.getEdgeO(1);
-            cubie.setEdgeO(1, cubie.getEdgeO(9) ^ 1); //what 
-            cubie.setEdgeO(9, cubie.getEdgeO(5) ^ 1); 
-            cubie.setEdgeO(5, cubie.getEdgeO(8) ^ 1); 
-            cubie.setEdgeO(8, tempEdgeO ^ 1);
+            cubie.setEdgeO(1, cubie.getEdgeO(9));
+            cubie.setEdgeO(9, cubie.getEdgeO(5)); 
+            cubie.setEdgeO(5, cubie.getEdgeO(8)); 
+            cubie.setEdgeO(8, tempEdgeO);
 
         } else if (movement == 'U') {
             //corner permutation 
